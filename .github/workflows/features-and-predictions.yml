@@ -8,6 +8,11 @@ on:
 jobs:
   test_schedule:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['2.x', '3.x']
+    name: Python ${{ matrix.python-version }} sample
+    
     steps:
       - name: checkout repo content
         uses: actions/checkout@v2
@@ -15,7 +20,8 @@ jobs:
       - name: setup python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.8.x'
+          python-version: ${{ matrix.python-version }}
+          architecture: x64
           
       - name: install python packages
         run: |
